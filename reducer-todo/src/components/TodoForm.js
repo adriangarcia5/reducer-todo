@@ -1,28 +1,28 @@
-import React, {useState} from 'react';
+import React, {useState, useReducer} from 'react';
 
-export default function TodoForm (props) {
-    const {addItem} = props;
-    const [newTodo, setNewTodo] = useState('')
-
+export default function TodoForm ({state, dispatch}) {
+    const [newTodo, setNewTodo] = useState('');
+    
     function handleChange(e) {
         setNewTodo(e.target.value);
     }
 
     function submitTodo (e)  {
         e.preventDefault();
-        addItem(newTodo)
+        setNewTodo('');
+        dispatch({type: 'ADD_ITEM', payload: newTodo})
     }
 
     return (
-        <form onSubmit={submitTodo}>
+            <form onSubmit={submitTodo}>
             <input
                 type="text"
-                value={newTodo.name}
+                value={state.name}
                 name="name"
                 onChange={handleChange}
             />
             <button>Add</button>
-
         </form>
+        
     );
-} 
+}
